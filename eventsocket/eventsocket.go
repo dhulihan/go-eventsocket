@@ -220,6 +220,11 @@ func (h *Connection) readOne() bool {
 		h.evt <- resp
 	case "text/event-json":
 		tmp := make(EventHeader)
+
+		// copy raw json for convenient access
+		resp.BodyJSON = make([]byte, len(resp.Body))
+		copy(resp.BodyJSON, resp.Body)
+
 		err := json.Unmarshal([]byte(resp.Body), &tmp)
 		if err != nil {
 			h.err <- err
@@ -454,8 +459,9 @@ type EventHeader map[string]interface{}
 
 // Event represents a FreeSWITCH event.
 type Event struct {
-	Header EventHeader // Event headers, key:val
-	Body   string      // Raw body, available in some events
+	Header   EventHeader // Event headers, key:val
+	Body     string      // Raw body, available in some events
+	BodyJSON []byte      // raw body in json, only available when using json
 }
 
 func (r *Event) String() string {
