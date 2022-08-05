@@ -1,5 +1,9 @@
 # eventsocket
 
+## This is a fork
+
+Why? It adds a few more methods to provide better debugging of events.
+
 FreeSWITCH [Event Socket](http://wiki.freeswitch.org/wiki/Event_Socket) library
 for the [Go programming language](http://golang.org).
 
